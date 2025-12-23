@@ -1,0 +1,60 @@
+═══════════════════════════════════════════════════════════════
+    GITHUB PAGES İLE SİTE YAYINLAMA REHBERİ
+═══════════════════════════════════════════════════════════════
+
+ADIM 1: GitHub Hesabı
+───────────────────────────────────────────────────────────────
+1. https://github.com adresine git
+2. Ücretsiz hesap oluştur
+3. Email adresini doğrula
+
+ADIM 2: Git Kurulumu (Windows)
+───────────────────────────────────────────────────────────────
+1. https://git-scm.com/download/win adresinden Git indir
+2. Kur (varsayılan ayarlarla devam et)
+3. Git Bash'i aç
+
+ADIM 3: Repository Oluştur
+───────────────────────────────────────────────────────────────
+1. GitHub'da "+" → "New repository"
+2. Repository adı: kahvalti-organizasyon
+3. Public seç
+4. "Create repository"
+
+ADIM 4: Dosyaları GitHub'a Yükle
+───────────────────────────────────────────────────────────────
+Git Bash veya CMD'de şu komutları çalıştır:
+
+cd C:\Users\quenn\kahvalti-organizasyon
+
+git init
+git add .
+git commit -m "İlk yükleme"
+git branch -M main
+git remote add origin https://github.com/KULLANICI-ADIN/kahvalti-organizasyon.git
+git push -u origin main
+
+(KULLANICI-ADIN yerine kendi GitHub kullanıcı adınızı yazın)
+
+ADIM 5: GitHub Pages'i Aktif Et
+───────────────────────────────────────────────────────────────
+1. Repository'de Settings → Pages
+2. Source: "Deploy from a branch"
+3. Branch: main → / (root) → Save
+4. 2-3 dakika bekle
+
+ADIM 6: Siteye Eriş
+───────────────────────────────────────────────────────────────
+Site adresi: https://KULLANICI-ADIN.github.io/kahvalti-organizasyon/
+
+ADIM 7: Kendi Domain'i Bağla (Opsiyonel)
+───────────────────────────────────────────────────────────────
+1. Domain satın al (Natro, GoDaddy, vb.)
+2. DNS ayarlarına A record ekle:
+   185.199.108.153
+   185.199.109.153
+   185.199.110.153
+   185.199.111.153
+3. GitHub Pages → Custom domain → domain adını gir
+
+═══════════════════════════════════════════════════════════════

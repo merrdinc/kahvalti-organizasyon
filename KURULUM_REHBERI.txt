@@ -1,0 +1,285 @@
+═══════════════════════════════════════════════════════════════
+    TAM ÇALIŞIR BACKEND SİSTEMİ - KURULUM REHBERİ
+    PHP + MySQL ile Tam Fonksiyonel Site
+═══════════════════════════════════════════════════════════════
+
+🎉 YENİLİKLER:
+───────────────────────────────────────────────────────────────
+✅ Gerçek MySQL Veritabanı
+✅ PHP Backend API
+✅ Session tabanlı Authentication
+✅ Güvenli Giriş Sistemi
+✅ Otomatik Kurulum Sihirbazı
+✅ LocalStorage yerine veritabanı kullanımı
+
+═══════════════════════════════════════════════════════════════
+📂 DOSYA YAPISI
+═══════════════════════════════════════════════════════════════
+
+BACKEND DOSYALARI (YENİ):
+├── config.php                  → Veritabanı yapılandırması
+├── database.sql                → MySQL veritabanı yapısı
+├── install.php                 → Otomatik kurulum sihirbazı
+│
+├── api/                        → Backend API Endpoints
+│   ├── auth.php               → Giriş/Çıkış/Session
+│   ├── hero.php               → Ana sayfa API
+│   ├── about.php              → Hakkımızda API
+│   ├── services.php           → Hizmetler API (CRUD)
+│   ├── gallery.php            → Galeri API
+│   └── contact.php            → İletişim API
+
+GÜNCELLENMIŞ DOSYALAR:
+├── admin-panel-new.js          → Backend kullanan admin panel
+├── data-loader-new.js          → API'den veri çeken loader
+├── admin-login-new.html        → Backend ile giriş yapan login
+
+ESKİ DOSYALAR (Yedek olarak kalabilir):
+├── admin-panel.js              → LocalStorage versiyonu
+├── data-loader.js              → LocalStorage versiyonu
+├── admin-login.html            → LocalStorage versiyonu
+
+═══════════════════════════════════════════════════════════════
+🚀 HIZLI KURULUM (LOCALHOST)
+═══════════════════════════════════════════════════════════════
+
+ADIM 1: XAMPP/WAMP Kur
+───────────────────────────────────────────────────────────────
+1. XAMPP indir: https://www.apachefriends.org
+2. Kur (varsayılan ayarlarla)
+3. Apache ve MySQL'i başlat
+
+ADIM 2: Dosyaları Taşı
+───────────────────────────────────────────────────────────────
+1. Tüm dosyaları şuraya kopyala:
+   C:\xampp\htdocs\kahvalti-organizasyon\
+
+2. Ya da favori klasörünüzü httpd.conf'dan ayarlayın
+
+ADIM 3: Kurulum Sihirbazını Çalıştır
+───────────────────────────────────────────────────────────────
+1. Tarayıcıda aç:
+   http://localhost/kahvalti-organizasyon/install.php
+
+2. Veritabanı bilgilerini gir:
+   ┌────────────────────────────────┐
+   │ Sunucu: localhost              │
+   │ Veritabanı: kahvalti_org       │
+   │ Kullanıcı: root                │
+   │ Şifre: (boş bırak)             │
+   └────────────────────────────────┘
+
+3. "Kuruluma Başla" tıkla
+
+4. Otomatik:
+   ✓ Veritabanı oluşturulur
+   ✓ Tablolar kurulur
+   ✓ Varsayılan veriler eklenir
+   ✓ config.php güncellenir
+
+ADIM 4: Dosyaları Güncelle
+───────────────────────────────────────────────────────────────
+Manuel olarak bu dosyaları değiştirin:
+
+1. admin-panel.html
+   Değiştir:
+   <script src="admin-panel.js"></script>
+   Yeni:
+   <script src="admin-panel-new.js"></script>
+
+2. admin-login.html dosyasını sil
+   admin-login-new.html → admin-login.html olarak yeniden adlandır
+
+3. index.html
+   Değiştir:
+   <script src="data-loader.js"></script>
+   Yeni:
+   <script src="data-loader-new.js"></script>
+
+ADIM 5: Test Et!
+───────────────────────────────────────────────────────────────
+1. Ana Site: http://localhost/kahvalti-organizasyon/
+2. Admin: http://localhost/kahvalti-organizasyon/admin-login.html
+
+   Giriş Bilgileri:
+   Kullanıcı: admin
+   Şifre: admin123
+
+═══════════════════════════════════════════════════════════════
+🌐 CANLIYA ALMA (HOSTING'E YÜKLEME)
+═══════════════════════════════════════════════════════════════
+
+YÖNTEM 1: cPanel ile
+───────────────────────────────────────────────────────────────
+1. Hosting satın al (Natro, Turhost, vb.)
+
+2. cPanel → "MySQL Databases"
+   - Yeni veritabanı oluştur
+   - Kullanıcı oluştur ve veritabanına bağla
+   - Yetkileri ver
+
+3. cPanel → "File Manager"
+   - public_html klasörüne git
+   - Tüm dosyaları yükle
+
+4. config.php'yi düzenle:
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'kullaniciadi_kahvalti');
+   define('DB_USER', 'kullaniciadi_dbuser');
+   define('DB_PASS', 'sifreniz');
+
+5. Tarayıcıda çalıştır:
+   https://siteniz.com/install.php
+
+6. GÜVENLİK: install.php'yi SİL!
+
+YÖNTEM 2: FileZilla (FTP)
+───────────────────────────────────────────────────────────────
+1. FileZilla indir ve kur
+
+2. FTP bilgileriyle bağlan:
+   Host: ftp.siteniz.com
+   Username: FTP kullanıcı adı
+   Password: FTP şifresi
+   Port: 21
+
+3. Dosyaları public_html'e yükle
+
+4. phpMyAdmin'den database.sql'i import et
+
+5. config.php'yi düzenle
+
+═══════════════════════════════════════════════════════════════
+🔧 MANUEL KURULUM (İleri Seviye)
+═══════════════════════════════════════════════════════════════
+
+1. MySQL Veritabanı Oluştur:
+   CREATE DATABASE kahvalti_organizasyon CHARACTER SET utf8mb4;
+
+2. SQL Dosyasını İmport Et:
+   mysql -u root -p kahvalti_organizasyon < database.sql
+
+3. config.php Düzenle:
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'kahvalti_organizasyon');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');
+
+4. Upload klasörü oluştur (izinler: 755):
+   mkdir uploads
+   chmod 755 uploads
+
+5. Test et:
+   http://localhost/kahvalti-organizasyon/
+
+═══════════════════════════════════════════════════════════════
+📊 VERİTABANI YAPISI
+═══════════════════════════════════════════════────────────────
+
+TABLOLAR:
+├── admins          → Admin kullanıcılar
+├── hero            → Ana sayfa içeriği
+├── about           → Hakkımızda içeriği
+├── services        → Hizmetler (CRUD)
+├── gallery         → Galeri resimleri
+├── contact         → İletişim bilgileri
+├── settings        → Site ayarları
+└── messages        → İletişim formu mesajları
+
+═══════════════════════════════════════════════════════════════
+🔐 GÜVENLİK
+═══════════════════════════════════════════════════════════════
+
+ÖNEMLİ GÜVENLİK NOKTALARI:
+
+1. ŞİFRE DEĞİŞTİR:
+   Admin panelde ilk girişte şifrenizi değiştirin!
+
+2. install.php'yi SİL:
+   Kurulum tamamlandıktan sonra mutlaka silin!
+
+3. config.php İzinleri:
+   chmod 644 config.php (veya 400)
+
+4. .htaccess Ekle:
+   <Files "config.php">
+       Require all denied
+   </Files>
+
+5. SQL Injection Koruması:
+   ✓ PDO prepared statements kullanılıyor
+   ✓ Parametreler sanitize ediliyor
+
+6. XSS Koruması:
+   ✓ htmlspecialchars() kullanılıyor
+   ✓ strip_tags() aktif
+
+7. Session Güvenliği:
+   ✓ Session timeout: 1 saat
+   ✓ Güvenli session yönetimi
+
+═══════════════════════════════════════════════════════════════
+🎨 ÖZELLEŞTİRME
+═══════════════════════════════════════════════════════════════
+
+RENK DEĞİŞTİRME:
+style.css → :root { --primary-color: #d4694f; }
+
+LOGOTİP EKLEME:
+Admin Panel → Settings → Logo URL
+
+VARSAYILAN ŞİFRE:
+database.sql → admins tablosu → password_hash('yeni_sifre')
+
+═══════════════════════════════════════════════════════════════
+🐛 SORUN GİDERME
+═══════════════════════════════════════════════════════════════
+
+PROBLEM: "Cannot connect to database"
+ÇÖZÜM:
+- MySQL servisinin çalıştığından emin olun
+- config.php'deki bilgileri kontrol edin
+- Veritabanının var olduğundan emin olun
+
+PROBLEM: "Permission denied" hatası
+ÇÖZÜM:
+- uploads/ klasörü izinlerini kontrol edin
+- chmod 755 uploads/
+
+PROBLEM: "Session expired" hatası
+ÇÖZÜM:
+- php.ini → session.save_path ayarını kontrol edin
+- Session klasörü yazılabilir mi kontrol edin
+
+PROBLEM: Admin panelde değişiklikler görünmüyor
+ÇÖZÜM:
+- Tarayıcı cache'ini temizleyin (Ctrl+Shift+Delete)
+- Hard refresh yapın (Ctrl+F5)
+- Veritabanında değişiklik olup olmadığını kontrol edin
+
+═══════════════════════════════════════════════════════════════
+📞 DESTEK
+═══════════════════════════════════════════════════════════════
+
+Sorun yaşarsanız:
+1. Error log'ları kontrol edin
+2. Browser Console'u açın (F12)
+3. PHP error_log dosyasına bakın
+
+═══════════════════════════════════════════════════════════════
+🎉 SİTE HAZIR!
+═══════════════════════════════════════════════════════════════
+
+Kurulum tamamlandı! Artık:
+✅ Gerçek veritabanı kullanıyorsunuz
+✅ Güvenli authentication sisteminiz var
+✅ Admin panel tam çalışıyor
+✅ Tüm veriler kalıcı
+✅ Üretim ortamına hazır
+
+İyi kullanımlar! 🚀
+
+═══════════════════════════════════════════════════════════════
+Version: 2.0 (Backend Edition)
+Son Güncelleme: 2024
+═══════════════════════════════════════════════════════════════

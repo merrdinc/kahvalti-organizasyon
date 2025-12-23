@@ -1,0 +1,315 @@
+═══════════════════════════════════════════════════════════════
+    KAHVALTI & ORGANİZASYON WEB SİTESİ - KULLANIM KILAVUZU
+═══════════════════════════════════════════════════════════════
+
+📁 DOSYA YAPISI
+───────────────────────────────────────────────────────────────
+kahvalti-organizasyon/
+│
+├── index.html              → Ana sayfa
+├── style.css               → Ana sayfa stilleri
+├── script.js               → Ana sayfa JavaScript
+├── data-loader.js          → Dinamik veri yükleme sistemi
+│
+├── admin-login.html        → Admin giriş sayfası
+├── admin-panel.html        → Admin yönetim paneli
+├── admin-style.css         → Admin panel stilleri
+├── admin-panel.js          → Admin panel JavaScript
+│
+└── KULLANIM_KILAVUZU.txt   → Bu dosya
+
+═══════════════════════════════════════════════════════════════
+🚀 BAŞLANGIÇ
+═══════════════════════════════════════════════════════════════
+
+1. SİTEYİ AÇMAK:
+   - index.html dosyasını tarayıcınızda açın
+   - Alternatif: Ctrl+Shift+A ile admin paneline hızlı erişim
+
+2. ADMIN PANELİNE GİRİŞ:
+   - admin-login.html sayfasını açın
+   - VEYA ana sayfadan: Ctrl+Shift+A tuş kombinasyonu
+
+   GİRİŞ BİLGİLERİ:
+   ┌─────────────────────────────────────┐
+   │ Kullanıcı Adı: admin               │
+   │ Şifre: admin123                     │
+   └─────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+🎨 ADMİN PANELİ ÖZELLİKLERİ
+═══════════════════════════════════════════════════════════════
+
+Sol menüden erişilebilir bölümler:
+
+1. 📊 DASHBOARD
+   ─────────────────────────────────────────
+   • Toplam hizmet sayısı
+   • Galeri görsel sayısı
+   • İstatistikler
+   • Hızlı bilgiler
+
+2. 🏠 ANA SAYFA (Hero Bölümü)
+   ─────────────────────────────────────────
+   Düzenleyebilecekleriniz:
+   • Ana başlık
+   • Alt başlık
+   • Arka plan resmi URL
+
+3. ℹ️ HAKKIMIZDA
+   ─────────────────────────────────────────
+   Düzenleyebilecekleriniz:
+   • Başlık
+   • İlk paragraf
+   • İkinci paragraf
+   • Bölüm resmi
+
+4. 🍴 HİZMETLER
+   ─────────────────────────────────────────
+   İşlemler:
+   • ✅ Yeni hizmet ekle
+   • ✏️ Mevcut hizmeti düzenle
+   • ❌ Hizmet sil
+
+   Her hizmet için:
+   • Başlık
+   • Açıklama
+   • Resim URL
+   • İkon (Font Awesome)
+   • Özellikler listesi
+
+5. 🖼️ GALERİ
+   ─────────────────────────────────────────
+   İşlemler:
+   • ➕ Yeni resim ekle
+   • 🗑️ Resim sil
+
+   Her resim için:
+   • Resim URL
+   • Açıklama (opsiyonel)
+
+6. 📧 İLETİŞİM
+   ─────────────────────────────────────────
+   Düzenleyebilecekleriniz:
+   • Adres
+   • Telefon
+   • E-posta
+   • WhatsApp numarası
+   • Facebook URL
+   • Instagram URL
+
+═══════════════════════════════════════════════════════════════
+💾 VERİ YÖNETİMİ
+═══════════════════════════════════════════════════════════════
+
+• Tüm veriler LocalStorage'da saklanır
+• Tarayıcı önbelleği temizlenirse veriler SILINIR
+• Her değişiklik otomatik kaydedilir
+• İnternet bağlantısı GEREKTIRMEZ (resim URL'leri hariç)
+
+VERİ YEDEKLEME:
+1. Tarayıcı Developer Tools'u açın (F12)
+2. Console sekmesine gidin
+3. Şunu yazın: localStorage.getItem('siteData')
+4. Çıkan metni bir dosyaya kaydedin
+
+VERİ GERİ YÜKLEME:
+1. Developer Tools Console'da:
+2. localStorage.setItem('siteData', 'BURAYA_YEDEK_VERIYI_YAPIŞTIRIN')
+
+═══════════════════════════════════════════════════════════════
+🎯 HİZMET EKLEME/DÜZENLEME
+═══════════════════════════════════════════════════════════════
+
+1. "Hizmetler" bölümüne gidin
+2. "Yeni Hizmet Ekle" butonuna tıklayın
+3. Formu doldurun:
+
+   BAŞLIK: Hizmetin adı
+   ÖRNEK: "Serpme Kahvaltı"
+
+   AÇIKLAMA: Kısa açıklama
+   ÖRNEK: "Zengin çeşitleri ve taze ürünler..."
+
+   RESİM URL: Resim bağlantısı
+   ÖRNEK: https://images.unsplash.com/photo-...
+
+   İKON: Font Awesome class
+   ÖRNEKler:
+   • fas fa-utensils        → Çatal-kaşık
+   • fas fa-birthday-cake   → Pasta
+   • fas fa-briefcase       → Çanta
+   • fas fa-ring            → Yüzük
+   • fas fa-coffee          → Kahve
+   • fas fa-heart           → Kalp
+
+   ÖZELLİKLER: Her satıra bir özellik
+   ÖRNEK:
+   Çeşit çeşit peynirler
+   Ev yapımı reçeller
+   Sıcak börekler
+
+4. "Kaydet" butonuna tıklayın
+
+═══════════════════════════════════════════════════════════════
+🖼️ RESİM EKLEME
+═══════════════════════════════════════════════════════════════
+
+RESİM KAYNAKLARI:
+• Unsplash: https://unsplash.com
+• Pexels: https://pexels.com
+• Kendi sunucunuz
+
+RESİM URL ALMA:
+1. Unsplash'ta resim bulun
+2. Sağ tık → "Resim adresini kopyala"
+3. URL'yi admin paneline yapıştırın
+
+NOT: Yüksek çözünürlüklü resimler kullanın (min. 800px)
+
+═══════════════════════════════════════════════════════════════
+📱 WHATSAPP ENTEGRASYONU
+═══════════════════════════════════════════════════════════════
+
+WhatsApp numarasını değiştirmek için:
+
+1. "İletişim" bölümüne gidin
+2. "WhatsApp Numarası" alanını doldurun
+3. Format: 90XXXXXXXXXX (başında 90 olmalı)
+
+ÖRNEK:
+• Numara: 0 505 123 45 67
+• WhatsApp: 905051234567 (sıfır ve boşluk YOK!)
+
+═══════════════════════════════════════════════════════════════
+🎨 RENK DEĞİŞTİRME
+═══════════════════════════════════════════════════════════════
+
+Ana renkleri değiştirmek için:
+
+1. style.css dosyasını açın
+2. En üstteki :root bölümünü bulun:
+
+   :root {
+       --primary-color: #d4694f;      ← Ana renk
+       --secondary-color: #b36c05;    ← İkincil renk
+       --dark-bg: #1a1a1a;            ← Koyu arka plan
+       --light-bg: #f8f5f2;           ← Açık arka plan
+   }
+
+3. Hex renk kodlarını değiştirin
+4. Sayfayı yenileyin
+
+RENK SEÇME ARAÇLARI:
+• https://colorhunt.co
+• https://coolors.co
+
+═══════════════════════════════════════════════════════════════
+🔐 GÜVENLİK
+═══════════════════════════════════════════════════════════════
+
+ÖNEMLİ NOTLAR:
+⚠️ Bu sistem yerel (LocalStorage) kullanır
+⚠️ Gerçek bir sunucu veritabanı YOK
+⚠️ Üretim ortamı için uygun DEĞİL
+
+ÜRETİM İÇİN YAPILMASI GEREKENLER:
+• Backend API oluşturun (Node.js, PHP, vb.)
+• Gerçek veritabanı ekleyin (MySQL, MongoDB)
+• Güvenli authentication sistemi
+• Resim upload sistemi
+• SSL sertifikası
+
+ŞİFRE DEĞİŞTİRME:
+1. admin-login.html dosyasını açın
+2. Şu satırı bulun (yaklaşık satır 68):
+   if (username === 'admin' && password === 'admin123')
+3. 'admin' ve 'admin123' değerlerini değiştirin
+
+═══════════════════════════════════════════════════════════════
+🐛 SORUN GİDERME
+═══════════════════════════════════════════════════════════════
+
+PROBLEM: Değişiklikler görünmüyor
+ÇÖZÜM: Sayfayı yenileyin (Ctrl+F5 ile hard refresh)
+
+PROBLEM: Admin paneline giremiyorum
+ÇÖZÜM:
+• Kullanıcı adı: admin
+• Şifre: admin123
+• Cache'i temizleyin
+
+PROBLEM: Resimler yüklenmiyor
+ÇÖZÜM:
+• URL'nin doğru olduğundan emin olun
+• HTTPS URL kullanın
+• Resim boyutunu kontrol edin
+
+PROBLEM: Galeri çalışmıyor
+ÇÖZÜM:
+• En az 1 resim ekleyin
+• Sayfayı yenileyin
+• Console'da hata var mı kontrol edin (F12)
+
+PROBLEM: Tüm veriler silindi
+ÇÖZÜM:
+• Tarayıcı önbelleği temizlenmiş olabilir
+• Yedek yoksa varsayılan veriler yüklenecek
+
+═══════════════════════════════════════════════════════════════
+🎓 FONT AWESOME İKONLARI
+═══════════════════════════════════════════════════════════════
+
+Popüler ikonlar:
+
+YEMEK & İÇECEK:
+• fas fa-utensils          → Çatal-kaşık
+• fas fa-coffee            → Kahve
+• fas fa-wine-glass        → Şarap bardağı
+• fas fa-birthday-cake     → Pasta
+• fas fa-pizza-slice       → Pizza dilimi
+
+KUTLAMA:
+• fas fa-ring              → Yüzük (düğün)
+• fas fa-gift              → Hediye
+• fas fa-heart             → Kalp
+• fas fa-star              → Yıldız
+
+KURUMSAL:
+• fas fa-briefcase         → Çanta
+• fas fa-building          → Bina
+• fas fa-users             → Kullanıcılar
+• fas fa-handshake         → El sıkışma
+
+Daha fazlası için: https://fontawesome.com/icons
+
+═══════════════════════════════════════════════════════════════
+📞 DESTEK & İLETİŞİM
+═══════════════════════════════════════════════════════════════
+
+Sorularınız için:
+• Dosyaları inceleyin
+• Developer Console'u kontrol edin (F12)
+• Tarayıcınızı güncelleyin
+
+TEKNİK GEREKSİNİMLER:
+• Modern tarayıcı (Chrome, Firefox, Edge, Safari)
+• JavaScript aktif olmalı
+• LocalStorage desteği
+
+═══════════════════════════════════════════════════════════════
+📝 NOTLAR
+═══════════════════════════════════════════════════════════════
+
+• Site tamamen responsive (mobil uyumlu)
+• Animasyonlar otomatik çalışır
+• Smooth scroll aktif
+• Parallax efekt mevcut
+• WhatsApp butonu her sayfada görünür
+
+İyi kullanımlar! 🎉
+
+═══════════════════════════════════════════════════════════════
+Son Güncelleme: 2024
+Version: 1.0
+═══════════════════════════════════════════════════════════════

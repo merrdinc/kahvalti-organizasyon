@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Kahvaltı & Organizasyon</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Kahvaltı & Organizasyon</h2>
+                <p>Yönetim Paneli</p>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="#dashboard" class="menu-item active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#general" class="menu-item" data-section="general">
+                    <i class="fas fa-cog"></i>
+                    <span>Genel Ayarlar</span>
+                </a>
+                <a href="#hero" class="menu-item" data-section="hero">
+                    <i class="fas fa-home"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <a href="#about" class="menu-item" data-section="about">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Hakkımızda</span>
+                </a>
+                <a href="#services" class="menu-item" data-section="services">
+                    <i class="fas fa-utensils"></i>
+                    <span>Hizmetler</span>
+                </a>
+                <a href="#gallery" class="menu-item" data-section="gallery">
+                    <i class="fas fa-images"></i>
+                    <span>Galeri</span>
+                </a>
+                <a href="#contact" class="menu-item" data-section="contact">
+                    <i class="fas fa-envelope"></i>
+                    <span>İletişim</span>
+                </a>
+                <a href="#footer" class="menu-item" data-section="footer">
+                    <i class="fas fa-shoe-prints"></i>
+                    <span>Footer</span>
+                </a>
+                <a href="index.html" class="menu-item" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Siteyi Görüntüle</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Çıkış Yap
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="admin-section active">
+                <div class="admin-header">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-cards">
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon primary">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                        </div>
+                        <h3 id="servicesCount">4</h3>
+                        <p>Toplam Hizmet</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon success">
+                                <i class="fas fa-images"></i>
+                            </div>
+                        </div>
+                        <h3 id="galleryCount">5</h3>
+                        <p>Galeri Görseli</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon info">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                        <h3>1,234</h3>
+                        <p>Toplam Ziyaretçi</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <div class="stat-card-icon warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <h3 id="currentTime"></h3>
+                        <p>Son Güncelleme</p>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Hoş Geldiniz!</h2>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Bilgi:</strong> Bu panelden sitenizin tüm içeriğini yönetebilirsiniz. Sol menüden istediğiniz bölüme geçiş yapabilirsiniz.
+                        </div>
+                    </div>
+                    <p>Admin paneline hoş geldiniz. Sitenizin tüm bölümlerini buradan düzenleyebilirsiniz. Sol menüden ilgili bölüme tıklayarak içerik düzenlemeye başlayabilirsiniz.</p>
+                </div>
+            </section>
+
+            <!-- General Settings Section -->
+            <section id="general-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Genel Ayarlar</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Genel Ayarlar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Site Bilgileri</h2>
+                    </div>
+
+                    <form id="generalForm" class="admin-form">
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Site Adı / Logo Yazısı</label>
+                                <input type="text" id="siteName" placeholder="Kahvaltı & Organizasyon">
+                            </div>
+
+                            <div class="form-group-admin">
+                                <label>Sayfa Başlığı (Browser Tab)</label>
+                                <input type="text" id="siteTitle" placeholder="Kahvaltı & Organizasyon - Lezzet Dolu Anlar">
+                            </div>
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Logo Resmi URL (Opsiyonel - boş bırakılırsa yazı logo kullanılır)</label>
+                            <input type="text" id="siteLogo" placeholder="https://...">
+                        </div>
+
+                        <div class="section-header-admin" style="margin-top: 2rem;">
+                            <h2>Bölüm Etiketleri</h2>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Hakkımızda Etiketi</label>
+                                <input type="text" id="labelAbout" placeholder="Hakkımızda">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Hakkımızda Başlık</label>
+                                <input type="text" id="titleAbout" placeholder="Lezzet ve Kalitenin Buluşma Noktası">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Hizmetler Etiketi</label>
+                                <input type="text" id="labelServices" placeholder="Hizmetlerimiz">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Hizmetler Başlık</label>
+                                <input type="text" id="titleServices" placeholder="Size Özel Çözümler">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Galeri Etiketi</label>
+                                <input type="text" id="labelGallery" placeholder="Galeri">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Galeri Başlık</label>
+                                <input type="text" id="titleGallery" placeholder="Çalışmalarımızdan Kareler">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>İletişim Etiketi</label>
+                                <input type="text" id="labelContact" placeholder="İletişim">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>İletişim Başlık</label>
+                                <input type="text" id="titleContact" placeholder="Bizimle İletişime Geçin">
+                            </div>
+                        </div>
+
+                        <div class="section-header-admin" style="margin-top: 2rem;">
+                            <h2>Menü Ayarları</h2>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Menü 1</label>
+                                <input type="text" id="menu1" placeholder="Ana Sayfa">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Menü 2</label>
+                                <input type="text" id="menu2" placeholder="Hakkımızda">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Menü 3</label>
+                                <input type="text" id="menu3" placeholder="Hizmetlerimiz">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Menü 4</label>
+                                <input type="text" id="menu4" placeholder="Galeri">
+                            </div>
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Menü 5</label>
+                            <input type="text" id="menu5" placeholder="İletişim">
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Kaydet
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Hero Section -->
+            <section id="hero-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Ana Sayfa Düzenle</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Ana Sayfa Düzenle</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Hero Bölümü</h2>
+                    </div>
+
+                    <form id="heroForm" class="admin-form">
+                        <div class="form-group-admin">
+                            <label>Ana Başlık</label>
+                            <input type="text" id="heroTitle" placeholder="Lezzet Dolu Anlarınıza Eşlik Ediyoruz">
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Alt Başlık</label>
+                            <textarea id="heroSubtitle" placeholder="Kahvaltı ve organizasyon hizmetlerimizle..."></textarea>
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Arka Plan Resmi URL</label>
+                            <input type="text" id="heroImage" placeholder="https://...">
+                        </div>
+
+                        <div class="section-header-admin" style="margin-top: 2rem;">
+                            <h2>Hero Butonları</h2>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Birinci Buton Metni</label>
+                                <input type="text" id="heroButton1" placeholder="Hizmetlerimiz">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>İkinci Buton Metni</label>
+                                <input type="text" id="heroButton2" placeholder="İletişime Geçin">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Kaydet
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Hakkımızda Düzenle</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Hakkımızda</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Hakkımızda Bölümü</h2>
+                    </div>
+
+                    <form id="aboutForm" class="admin-form">
+                        <div class="form-group-admin">
+                            <label>Başlık</label>
+                            <input type="text" id="aboutTitle" placeholder="Sizin İçin Buradayız">
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>İlk Paragraf</label>
+                            <textarea id="aboutText1"></textarea>
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>İkinci Paragraf</label>
+                            <textarea id="aboutText2"></textarea>
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Resim URL</label>
+                            <input type="text" id="aboutImage" placeholder="https://...">
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Özellikler Listesi (Her satıra bir özellik yazın)</label>
+                            <textarea id="aboutFeatures" rows="4" placeholder="Taze ve Kaliteli Malzemeler&#10;Profesyonel Ekip&#10;Özel Menü Seçenekleri&#10;Her Bütçeye Uygun Paketler"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Kaydet
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Hizmetler Yönetimi</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Hizmetler</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Hizmetler</h2>
+                        <button class="btn btn-primary" onclick="openServiceModal()">
+                            <i class="fas fa-plus"></i>
+                            Yeni Hizmet Ekle
+                        </button>
+                    </div>
+
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Resim</th>
+                                <th>Başlık</th>
+                                <th>Açıklama</th>
+                                <th>İkon</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="servicesTableBody">
+                            <!-- Services will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Galeri Yönetimi</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Galeri</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Galeri Görselleri</h2>
+                        <button class="btn btn-primary" onclick="openGalleryModal()">
+                            <i class="fas fa-plus"></i>
+                            Resim Ekle
+                        </button>
+                    </div>
+
+                    <div class="image-preview" id="galleryGrid">
+                        <!-- Gallery images will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>İletişim Bilgileri</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>İletişim</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>İletişim Bilgileri</h2>
+                    </div>
+
+                    <form id="contactForm" class="admin-form">
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Adres</label>
+                                <textarea id="contactAddress"></textarea>
+                            </div>
+
+                            <div class="form-group-admin">
+                                <label>Telefon</label>
+                                <input type="tel" id="contactPhone" placeholder="0 555 123 45 67">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>E-posta</label>
+                                <input type="email" id="contactEmail" placeholder="info@kahvalti.com">
+                            </div>
+
+                            <div class="form-group-admin">
+                                <label>WhatsApp Numarası</label>
+                                <input type="tel" id="contactWhatsapp" placeholder="905551234567">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Facebook URL</label>
+                                <input type="url" id="contactFacebook" placeholder="https://facebook.com/...">
+                            </div>
+
+                            <div class="form-group-admin">
+                                <label>Instagram URL</label>
+                                <input type="url" id="contactInstagram" placeholder="https://instagram.com/...">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Kaydet
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Footer Section -->
+            <section id="footer-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Footer Ayarları</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Footer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2>Footer İçeriği</h2>
+                    </div>
+
+                    <form id="footerForm" class="admin-form">
+                        <div class="form-group-admin">
+                            <label>Copyright Metni</label>
+                            <input type="text" id="footerCopyright" placeholder="© 2024 Kahvaltı & Organizasyon. Tüm hakları saklıdır.">
+                        </div>
+
+                        <div class="form-group-admin">
+                            <label>Alt Metin</label>
+                            <input type="text" id="footerText" placeholder="Lezzet dolu anlarınıza eşlik etmekten mutluluk duyarız.">
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Kaydet
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Service Modal -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Hizmet Ekle/Düzenle</h3>
+                <button class="modal-close" onclick="closeServiceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="serviceModalForm" class="admin-form">
+                <input type="hidden" id="serviceId">
+
+                <div class="form-group-admin">
+                    <label>Başlık</label>
+                    <input type="text" id="serviceTitle" required>
+                </div>
+
+                <div class="form-group-admin">
+                    <label>Açıklama</label>
+                    <textarea id="serviceDescription" required></textarea>
+                </div>
+
+                <div class="form-group-admin">
+                    <label>Resim URL</label>
+                    <input type="text" id="serviceImage" required>
+                </div>
+
+                <div class="form-group-admin">
+                    <label>İkon (Font Awesome class)</label>
+                    <input type="text" id="serviceIcon" placeholder="fas fa-utensils" required>
+                    <small>Örnek: fas fa-utensils, fas fa-birthday-cake, fas fa-briefcase</small>
+                </div>
+
+                <div class="form-group-admin">
+                    <label>Özellikler (Her satıra bir tane)</label>
+                    <textarea id="serviceFeatures" rows="4" placeholder="Özellik 1&#10;Özellik 2&#10;Özellik 3"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-success" style="flex: 1;">
+                        <i class="fas fa-save"></i>
+                        Kaydet
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeServiceModal()" style="flex: 1;">
+                        <i class="fas fa-times"></i>
+                        İptal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Galeri Resmi Ekle</h3>
+                <button class="modal-close" onclick="closeGalleryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="galleryModalForm" class="admin-form">
+                <div class="form-group-admin">
+                    <label>Resim URL</label>
+                    <input type="text" id="galleryImageUrl" required>
+                </div>
+
+                <div class="form-group-admin">
+                    <label>Açıklama (Opsiyonel)</label>
+                    <input type="text" id="galleryImageAlt" placeholder="Resim açıklaması">
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-success" style="flex: 1;">
+                        <i class="fas fa-save"></i>
+                        Ekle
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeGalleryModal()" style="flex: 1;">
+                        <i class="fas fa-times"></i>
+                        İptal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+═══════════════════════════════════════════════════════════════
+    TÜRKİYE HOSTİNG FİRMALARI İLE YAYINLAMA
+═══════════════════════════════════════════════════════════════
+
+ADIM 1: Hosting ve Domain Satın Al
+───────────────────────────────────────────────────────────────
+Önerilen Firmalar:
+
+1. NATRO (www.natro.com)
+   • Başlangıç Paketi: ~120₺/yıl
+   • .com domain dahil
+   • cPanel var
+
+2. TURHOST (www.turhost.com)
+   • Economy: ~150₺/yıl
+   • Kolay kullanım
+
+3. HOSTİNGER (www.hostinger.com.tr)
+   • Premium: ~60₺/ay
+   • Çok hızlı
+
+ADIM 2: cPanel'e Giriş
+───────────────────────────────────────────────────────────────
+1. Hosting satın aldıktan sonra email gelecek
+2. cPanel giriş linki: cpanel.siteadiniz.com
+3. Kullanıcı adı ve şifre ile giriş yap
+
+ADIM 3: Dosya Yükleme (2 Yöntem)
+───────────────────────────────────────────────────────────────
+
+YÖNTEM A: File Manager (Kolay)
+────────────────────────────────
+1. cPanel'de "File Manager" aç
+2. "public_html" klasörüne git
+3. İçindeki varsayılan dosyaları sil
+4. "Upload" butonuna tıkla
+5. Tüm dosyaları yükle:
+   ☑ index.html
+   ☑ style.css
+   ☑ script.js
+   ☑ data-loader.js
+   ☑ admin-login.html
+   ☑ admin-panel.html
+   ☑ admin-style.css
+   ☑ admin-panel.js
+
+YÖNTEM B: FileZilla (FTP)
+────────────────────────────────
+1. FileZilla indir: filezilla-project.org
+2. FTP bilgileri (emailden gelecek):
+   Host: ftp.siteadiniz.com
+   Username: cpanel kullanıcı adı
+   Password: cpanel şifresi
+   Port: 21
+3. Bağlan
+4. Sağ tarafta "public_html" aç
+5. Sol taraftan dosyaları sürükle-bırak
+
+ADIM 4: Siteyi Test Et
+───────────────────────────────────────────────────────────────
+1. Tarayıcıda: www.siteadiniz.com
+2. Admin panel: www.siteadiniz.com/admin-login.html
+3. Çalışıyor mu kontrol et
+
+ADIM 5: SSL Sertifikası (HTTPS)
+───────────────────────────────────────────────────────────────
+1. cPanel → SSL/TLS Status
+2. "Run AutoSSL" tıkla
+3. 5 dakika bekle
+4. Site artık https:// ile açılır (güvenli)
+
+ÖNEMLİ NOTLAR:
+───────────────────────────────────────────────────────────────
+⚠️ Admin paneli LocalStorage kullandığı için her tarayıcıda
+   ayrı ayrı çalışır (gerçek veritabanı yok)
+
+⚠️ Üretim ortamı için mutlaka:
+   • Backend ekle (PHP, Node.js)
+   • MySQL veritabanı kullan
+   • Güvenli authentication yap
+
+⚠️ .htaccess dosyası ekle (güvenlik için):
+───────────────────────────────────────────────────────────────
+Dosya adı: .htaccess
+İçerik:
+
+# Güvenlik başlıkları
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# HTTPS yönlendirme
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+SORUN GİDERME:
+───────────────────────────────────────────────────────────────
+❌ Site açılmıyor:
+   → DNS yayılması 24 saat sürebilir
+   → Cache temizle (Ctrl+Shift+Delete)
+
+❌ Admin paneli çalışmıyor:
+   → Console'da hata var mı kontrol et (F12)
+   → Dosya yollarını kontrol et
+
+❌ Resimler görünmüyor:
+   → Resim URL'leri doğru mu kontrol et
+   → HTTPS kullan (http:// değil)
+
+═══════════════════════════════════════════════════════════════
