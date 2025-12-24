@@ -8,6 +8,7 @@
 :root {
     --primary-color: #d4694f;
     --secondary-color: #b36c05;
+    --accent-color: #2c3e50;
     --dark-bg: #1a1a1a;
     --light-bg: #f8f5f2;
     --text-dark: #333;
@@ -149,6 +150,80 @@ img {
     animation: zoomIn 20s ease-in-out infinite alternate;
 }
 
+/* ===== HERO SLIDER ===== */
+.hero-slider-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transform: scale(1.1);
+}
+
+.hero-slide.active {
+    opacity: 1;
+    animation: heroZoom 20s ease-in-out infinite alternate;
+}
+
+/* Fade Effect */
+.hero-slide[data-effect="fade"].active {
+    opacity: 1;
+}
+
+.hero-slide[data-effect="fade"].exiting {
+    opacity: 0;
+}
+
+/* Slide Effect */
+.hero-slide[data-effect="slide"].active {
+    transform: translateX(0) scale(1.1);
+}
+
+.hero-slide[data-effect="slide"].exiting {
+    transform: translateX(-100%) scale(1.1);
+}
+
+.hero-slide[data-effect="slide"].entering {
+    transform: translateX(100%) scale(1.1);
+    transition: none;
+}
+
+/* Zoom Effect */
+.hero-slide[data-effect="zoom"].active {
+    transform: scale(1.1);
+}
+
+.hero-slide[data-effect="zoom"].exiting {
+    transform: scale(1.5);
+    opacity: 0;
+}
+
+.hero-slide[data-effect="zoom"].entering {
+    transform: scale(0.8);
+}
+
+@keyframes heroZoom {
+    0% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+
 @keyframes zoomIn {
     0% {
         transform: scale(1.1);
@@ -166,6 +241,113 @@ img {
     height: 100%;
     background: linear-gradient(135deg, rgba(212, 105, 79, 0.7), rgba(179, 108, 5, 0.6));
     z-index: 1;
+}
+
+/* ===== PARTICLE EFFECTS ===== */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    top: -20px;
+    color: rgba(255, 255, 255, 0.8);
+    animation: particleFall linear infinite;
+}
+
+.particle-stars {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation-name: particleTwinkle;
+}
+
+.particle-bubbles {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+    border-radius: 50%;
+    animation-name: particleFloat;
+}
+
+.particle-snow {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    animation-name: particleSnow;
+}
+
+@keyframes particleFall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes particleTwinkle {
+    0%, 100% {
+        transform: translateY(-20px) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(50vh) scale(1.5);
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(50vh) translateX(30px);
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-20px) translateX(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes particleSnow {
+    0% {
+        transform: translateY(-20px) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 .hero-content {

@@ -9,6 +9,7 @@ function loadSiteData() {
     const data = getSiteData();
 
     if (data) {
+        loadColorSettings(data.general);
         loadGeneralSettings(data.general);
         loadHeroSection(data.hero);
         loadAboutSection(data.about, data.general);
@@ -17,6 +18,20 @@ function loadSiteData() {
         loadContactSection(data.contact, data.general);
         loadFooterSection(data.footer);
     }
+}
+
+// ===== LOAD COLOR SETTINGS =====
+function loadColorSettings(general) {
+    if (!general || !general.colors) return;
+
+    const colors = general.colors;
+    const root = document.documentElement;
+
+    if (colors.primary) root.style.setProperty('--primary-color', colors.primary);
+    if (colors.secondary) root.style.setProperty('--secondary-color', colors.secondary);
+    if (colors.accent) root.style.setProperty('--accent-color', colors.accent);
+    if (colors.background) root.style.setProperty('--light-bg', colors.background);
+    if (colors.text) root.style.setProperty('--text-dark', colors.text);
 }
 
 function getSiteData() {
@@ -70,20 +85,163 @@ function loadHeroSection(hero) {
 
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
-    const heroBg = document.querySelector('.hero-bg');
+    const heroSection = document.querySelector('.hero');
     const heroButtons = document.querySelectorAll('.hero-buttons .btn');
 
     if (heroTitle) heroTitle.textContent = hero.title;
     if (heroSubtitle) heroSubtitle.textContent = hero.subtitle;
-    if (heroBg && hero.backgroundImage) {
-        heroBg.style.backgroundImage = `url('${hero.backgroundImage}')`;
-    }
 
     // Update hero buttons
     if (heroButtons.length >= 2) {
         if (hero.button1) heroButtons[0].textContent = hero.button1;
         if (hero.button2) heroButtons[1].textContent = hero.button2;
     }
+
+    // Handle hero slider with multiple images
+    if (hero.slides && hero.slides.length > 0) {
+        initHeroSlider(hero);
+    } else if (hero.backgroundImage) {
+        // Fallback to single image
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+            heroBg.style.backgroundImage = `url('${hero.backgroundImage}')`;
+        }
+    }
+
+    // Apply overlay style
+    applyOverlayStyle(hero.overlayStyle || 'dark');
+
+    // Initialize particles if enabled
+    if (hero.particles && hero.particles !== 'none') {
+        initParticles(hero.particles);
+    }
+}
+
+// ===== HERO SLIDER =====
+let heroSlideIndex = 0;
+let heroSliderInterval;
+
+function initHeroSlider(hero) {
+    const heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
+
+    // Remove existing hero backgrounds
+    const existingBgs = heroSection.querySelectorAll('.hero-bg, .hero-slide');
+    existingBgs.forEach(bg => bg.remove());
+
+    // Create slider container
+    const sliderContainer = document.createElement('div');
+    sliderContainer.className = 'hero-slider-container';
+
+    // Add slides
+    hero.slides.forEach((slide, index) => {
+        const slideEl = document.createElement('div');
+        slideEl.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+        slideEl.style.backgroundImage = `url('${slide.url}')`;
+        slideEl.dataset.effect = hero.sliderEffect || 'fade';
+        sliderContainer.appendChild(slideEl);
+    });
+
+    // Insert slider before overlay
+    const heroOverlay = heroSection.querySelector('.hero-overlay');
+    heroSection.insertBefore(sliderContainer, heroOverlay);
+
+    // Start auto-slide
+    const speed = (hero.sliderSpeed || 5) * 1000;
+    if (heroSliderInterval) clearInterval(heroSliderInterval);
+
+    if (hero.slides.length > 1) {
+        heroSliderInterval = setInterval(() => {
+            changeHeroSlide(hero.sliderEffect || 'fade');
+        }, speed);
+    }
+}
+
+function changeHeroSlide(effect) {
+    const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length <= 1) return;
+
+    const currentSlide = slides[heroSlideIndex];
+    heroSlideIndex = (heroSlideIndex + 1) % slides.length;
+    const nextSlide = slides[heroSlideIndex];
+
+    // Apply effect class
+    currentSlide.classList.remove('active');
+    currentSlide.classList.add('exiting');
+
+    nextSlide.classList.add('active', 'entering');
+
+    setTimeout(() => {
+        currentSlide.classList.remove('exiting');
+        nextSlide.classList.remove('entering');
+    }, 1000);
+}
+
+// ===== OVERLAY STYLES =====
+function applyOverlayStyle(style) {
+    const overlay = document.querySelector('.hero-overlay');
+    if (!overlay) return;
+
+    // Remove existing style classes
+    overlay.classList.remove('overlay-dark', 'overlay-light', 'overlay-gradient', 'overlay-none');
+
+    switch(style) {
+        case 'dark':
+            overlay.style.background = 'rgba(0, 0, 0, 0.5)';
+            break;
+        case 'light':
+            overlay.style.background = 'rgba(255, 255, 255, 0.3)';
+            break;
+        case 'gradient':
+            overlay.style.background = 'linear-gradient(135deg, rgba(212, 105, 79, 0.7), rgba(179, 108, 5, 0.6))';
+            break;
+        case 'none':
+            overlay.style.background = 'transparent';
+            break;
+        default:
+            overlay.style.background = 'linear-gradient(135deg, rgba(212, 105, 79, 0.7), rgba(179, 108, 5, 0.6))';
+    }
+}
+
+// ===== PARTICLE EFFECTS =====
+function initParticles(type) {
+    const heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
+
+    // Remove existing particles
+    const existingParticles = heroSection.querySelector('.particles-container');
+    if (existingParticles) existingParticles.remove();
+
+    if (type === 'none') return;
+
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'particles-container';
+
+    const particleCount = 50;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `particle particle-${type}`;
+
+        // Random positioning and animation delay
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+
+        if (type === 'stars') {
+            particle.innerHTML = '★';
+            particle.style.fontSize = (Math.random() * 10 + 5) + 'px';
+        } else if (type === 'bubbles') {
+            particle.style.width = particle.style.height = (Math.random() * 20 + 10) + 'px';
+        } else if (type === 'snow') {
+            particle.innerHTML = '❄';
+            particle.style.fontSize = (Math.random() * 15 + 8) + 'px';
+        }
+
+        particlesContainer.appendChild(particle);
+    }
+
+    heroSection.appendChild(particlesContainer);
 }
 
 // ===== LOAD ABOUT SECTION =====

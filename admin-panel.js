@@ -31,12 +31,28 @@ const defaultData = {
             gallery: "Çalışmalarımızdan Kareler",
             contact: "Bizimle İletişime Geçin"
         },
-        menu: ["Ana Sayfa", "Hakkımızda", "Hizmetlerimiz", "Galeri", "İletişim"]
+        menu: ["Ana Sayfa", "Hakkımızda", "Hizmetlerimiz", "Galeri", "İletişim"],
+        colors: {
+            primary: "#d4694f",
+            secondary: "#b36c05",
+            accent: "#2c3e50",
+            background: "#f8f5f2",
+            text: "#333333",
+            gradient: "none"
+        }
     },
     hero: {
         title: "Lezzet Dolu Anlarınıza Eşlik Ediyoruz",
         subtitle: "Kahvaltı ve organizasyon hizmetlerimizle özel günlerinizi unutulmaz kılıyoruz",
-        backgroundImage: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=1920",
+        slides: [
+            { id: 1, url: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=1920" },
+            { id: 2, url: "https://images.unsplash.com/photo-1555244162-803834f70033?w=1920" },
+            { id: 3, url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1920" }
+        ],
+        sliderSpeed: 5,
+        sliderEffect: "fade",
+        overlayStyle: "dark",
+        particles: "none",
         button1: "Hizmetlerimiz",
         button2: "İletişime Geçin"
     },
@@ -174,12 +190,32 @@ function loadAllData() {
     document.getElementById('menu4').value = menu[3] || '';
     document.getElementById('menu5').value = menu[4] || '';
 
+    // Load Colors
+    const colors = data.general.colors || defaultData.general.colors;
+    document.getElementById('colorPrimary').value = colors.primary;
+    document.getElementById('colorPrimaryText').value = colors.primary;
+    document.getElementById('colorSecondary').value = colors.secondary;
+    document.getElementById('colorSecondaryText').value = colors.secondary;
+    document.getElementById('colorAccent').value = colors.accent;
+    document.getElementById('colorAccentText').value = colors.accent;
+    document.getElementById('colorBackground').value = colors.background;
+    document.getElementById('colorBackgroundText').value = colors.background;
+    document.getElementById('colorText').value = colors.text;
+    document.getElementById('colorTextText').value = colors.text;
+    document.getElementById('gradientStyle').value = colors.gradient || 'none';
+
     // Load Hero
     document.getElementById('heroTitle').value = data.hero.title;
     document.getElementById('heroSubtitle').value = data.hero.subtitle;
-    document.getElementById('heroImage').value = data.hero.backgroundImage;
     document.getElementById('heroButton1').value = data.hero.button1 || '';
     document.getElementById('heroButton2').value = data.hero.button2 || '';
+    document.getElementById('heroSliderSpeed').value = data.hero.sliderSpeed || 5;
+    document.getElementById('heroSliderEffect').value = data.hero.sliderEffect || 'fade';
+    document.getElementById('heroOverlayStyle').value = data.hero.overlayStyle || 'dark';
+    document.getElementById('heroParticles').value = data.hero.particles || 'none';
+
+    // Load Hero Slides
+    loadHeroSlides();
 
     // Load About
     document.getElementById('aboutTitle').value = data.about.title;
@@ -238,11 +274,89 @@ document.getElementById('generalForm')?.addEventListener('submit', function(e) {
             document.getElementById('menu3').value,
             document.getElementById('menu4').value,
             document.getElementById('menu5').value
-        ]
+        ],
+        colors: {
+            primary: document.getElementById('colorPrimary').value,
+            secondary: document.getElementById('colorSecondary').value,
+            accent: document.getElementById('colorAccent').value,
+            background: document.getElementById('colorBackground').value,
+            text: document.getElementById('colorText').value,
+            gradient: document.getElementById('gradientStyle').value
+        }
     };
 
     saveData(data);
 });
+
+// ===== COLOR PICKER SYNC =====
+function setupColorSync(colorId, textId) {
+    const colorInput = document.getElementById(colorId);
+    const textInput = document.getElementById(textId);
+
+    if (colorInput && textInput) {
+        colorInput.addEventListener('input', () => textInput.value = colorInput.value);
+        textInput.addEventListener('input', () => {
+            if (/^#[0-9A-Fa-f]{6}$/.test(textInput.value)) {
+                colorInput.value = textInput.value;
+            }
+        });
+    }
+}
+
+// Initialize color syncs
+document.addEventListener('DOMContentLoaded', function() {
+    setupColorSync('colorPrimary', 'colorPrimaryText');
+    setupColorSync('colorSecondary', 'colorSecondaryText');
+    setupColorSync('colorAccent', 'colorAccentText');
+    setupColorSync('colorBackground', 'colorBackgroundText');
+    setupColorSync('colorText', 'colorTextText');
+});
+
+// ===== HERO SLIDES MANAGEMENT =====
+function loadHeroSlides() {
+    const data = getData();
+    const slides = data.hero.slides || defaultData.hero.slides;
+    const container = document.getElementById('heroSlidesContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+    slides.forEach((slide, index) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `
+            <img src="${slide.url}" alt="Slide ${index + 1}">
+            <button class="preview-remove" onclick="removeHeroSlide(${slide.id})">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        container.appendChild(item);
+    });
+}
+
+function addHeroSlide() {
+    const url = prompt('Resim URL\'sini girin:');
+    if (!url || !url.trim()) return;
+
+    const data = getData();
+    if (!data.hero.slides) data.hero.slides = [];
+
+    data.hero.slides.push({
+        id: Date.now(),
+        url: url.trim()
+    });
+
+    saveData(data);
+    loadHeroSlides();
+}
+
+function removeHeroSlide(id) {
+    if (!confirm('Bu resmi silmek istediğinizden emin misiniz?')) return;
+
+    const data = getData();
+    data.hero.slides = data.hero.slides.filter(s => s.id !== id);
+    saveData(data);
+    loadHeroSlides();
+}
 
 // ===== HERO SECTION =====
 document.getElementById('heroForm')?.addEventListener('submit', function(e) {
@@ -250,9 +364,14 @@ document.getElementById('heroForm')?.addEventListener('submit', function(e) {
 
     const data = getData();
     data.hero = {
+        ...data.hero,
         title: document.getElementById('heroTitle').value,
         subtitle: document.getElementById('heroSubtitle').value,
-        backgroundImage: document.getElementById('heroImage').value,
+        slides: data.hero.slides || defaultData.hero.slides,
+        sliderSpeed: parseInt(document.getElementById('heroSliderSpeed').value) || 5,
+        sliderEffect: document.getElementById('heroSliderEffect').value,
+        overlayStyle: document.getElementById('heroOverlayStyle').value,
+        particles: document.getElementById('heroParticles').value,
         button1: document.getElementById('heroButton1').value,
         button2: document.getElementById('heroButton2').value
     };
