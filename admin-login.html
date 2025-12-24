@@ -49,11 +49,6 @@
                     Giriş Yap
                 </button>
 
-                <div class="login-info">
-                    <p><strong>Varsayılan Giriş Bilgileri:</strong></p>
-                    <p>Kullanıcı Adı: <code>admin</code></p>
-                    <p>Şifre: <code>admin123</code></p>
-                </div>
             </form>
 
             <div class="back-to-site">
@@ -82,16 +77,44 @@
             }
         }
 
+        // Hash function for password verification
+        async function hashString(str) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(str);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Stored credentials (hashed)
+        // Default: admin / admin123
+        const validCredentials = {
+            usernameHash: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+            passwordHash: '240be518fabd2724ddb6f04eeb9d5b22a8e894e9f3d18a9c37ef9e6e1a6f2a39'
+        };
+
+        // Check for custom credentials in localStorage
+        function getCredentials() {
+            const custom = localStorage.getItem('adminCredentials');
+            if (custom) {
+                return JSON.parse(custom);
+            }
+            return validCredentials;
+        }
+
         // Login form submit
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
 
-            // Basit authentication (gerçek projede backend kullanın)
-            if (username === 'admin' && password === 'admin123') {
+            const credentials = getCredentials();
+            const usernameHash = await hashString(username);
+            const passwordHash = await hashString(password);
+
+            if (usernameHash === credentials.usernameHash && passwordHash === credentials.passwordHash) {
                 // Session storage'a kaydet
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 if (remember) {

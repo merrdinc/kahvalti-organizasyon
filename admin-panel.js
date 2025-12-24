@@ -574,3 +574,135 @@ window.addEventListener('click', function(e) {
         e.target.classList.remove('active');
     }
 });
+
+// ===== SETTINGS & BACKUP FUNCTIONS =====
+
+// Hash function for password
+async function hashString(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Password change form
+document.getElementById('passwordForm')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const newUsername = document.getElementById('newUsername').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (newPassword !== confirmPassword) {
+        showAlert('error', 'Şifreler eşleşmiyor!');
+        return;
+    }
+
+    if (newPassword.length < 6) {
+        showAlert('error', 'Şifre en az 6 karakter olmalıdır!');
+        return;
+    }
+
+    const usernameHash = await hashString(newUsername);
+    const passwordHash = await hashString(newPassword);
+
+    const credentials = {
+        usernameHash: usernameHash,
+        passwordHash: passwordHash
+    };
+
+    localStorage.setItem('adminCredentials', JSON.stringify(credentials));
+    showAlert('success', 'Şifre başarıyla değiştirildi! Yeni giriş bilgilerinizi unutmayın.');
+
+    // Clear form
+    document.getElementById('passwordForm').reset();
+});
+
+// Export data function
+function exportData() {
+    const data = getData();
+    const dataStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `site-yedek-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showAlert('success', 'Veriler başarıyla indirildi!');
+}
+
+// Import data function
+function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+
+            // Validate the data structure
+            if (!importedData.general || !importedData.hero || !importedData.services) {
+                throw new Error('Geçersiz veri yapısı');
+            }
+
+            if (confirm('Mevcut veriler yedek dosyasındaki verilerle değiştirilecek. Devam etmek istiyor musunuz?')) {
+                localStorage.setItem('siteData', JSON.stringify(importedData));
+                showAlert('success', 'Veriler başarıyla geri yüklendi! Sayfa yenileniyor...');
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
+        } catch (error) {
+            showAlert('error', 'Dosya okunamadı veya geçersiz format!');
+        }
+    };
+    reader.readAsText(file);
+
+    // Reset file input
+    event.target.value = '';
+}
+
+// Reset to default function
+function resetToDefault() {
+    if (confirm('TÜM VERİLER SİLİNECEK ve varsayılan veriler yüklenecek. Bu işlem geri alınamaz! Devam etmek istiyor musunuz?')) {
+        if (confirm('Emin misiniz? Tüm özelleştirmeleriniz kaybolacak!')) {
+            localStorage.removeItem('siteData');
+            localStorage.removeItem('adminCredentials');
+            showAlert('success', 'Veriler sıfırlandı! Sayfa yenileniyor...');
+
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        }
+    }
+}
+
+// Update system info
+function updateSystemInfo() {
+    const data = localStorage.getItem('siteData');
+    const lastUpdateEl = document.getElementById('lastUpdate');
+    const dataSizeEl = document.getElementById('dataSize');
+
+    if (lastUpdateEl) {
+        lastUpdateEl.textContent = new Date().toLocaleString('tr-TR');
+    }
+
+    if (dataSizeEl && data) {
+        const sizeInBytes = new Blob([data]).size;
+        const sizeInKB = (sizeInBytes / 1024).toFixed(2);
+        dataSizeEl.textContent = `${sizeInKB} KB`;
+    }
+}
+
+// Call updateSystemInfo when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateSystemInfo();
+});

@@ -60,6 +60,10 @@
                     <i class="fas fa-shoe-prints"></i>
                     <span>Footer</span>
                 </a>
+                <a href="#settings" class="menu-item" data-section="settings">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Ayarlar & Yedekleme</span>
+                </a>
                 <a href="index.html" class="menu-item" target="_blank">
                     <i class="fas fa-external-link-alt"></i>
                     <span>Siteyi Görüntüle</span>
@@ -541,6 +545,92 @@
                             Kaydet
                         </button>
                     </form>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Ayarlar & Yedekleme</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Ayarlar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-header-admin">
+                        <h2><i class="fas fa-key"></i> Şifre Değiştir</h2>
+                    </div>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Önemli:</strong> Müşteriye teslim etmeden önce şifreyi değiştirin. Varsayılan şifre: admin / admin123
+                        </div>
+                    </div>
+
+                    <form id="passwordForm" class="admin-form">
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Yeni Kullanıcı Adı</label>
+                                <input type="text" id="newUsername" placeholder="Yeni kullanıcı adı" required>
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Yeni Şifre</label>
+                                <input type="password" id="newPassword" placeholder="Yeni şifre" required>
+                            </div>
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Şifre Tekrar</label>
+                            <input type="password" id="confirmPassword" placeholder="Şifreyi tekrar girin" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-key"></i>
+                            Şifreyi Değiştir
+                        </button>
+                    </form>
+                </div>
+
+                <div class="content-section" style="margin-top: 2rem;">
+                    <div class="section-header-admin">
+                        <h2><i class="fas fa-database"></i> Veri Yedekleme</h2>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Bilgi:</strong> Tüm site verilerinizi JSON dosyası olarak yedekleyebilir ve geri yükleyebilirsiniz. Düzenli yedek almayı unutmayın!
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                        <button class="btn btn-success" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            Verileri İndir (Yedekle)
+                        </button>
+                        <label class="btn btn-warning" style="cursor: pointer;">
+                            <i class="fas fa-upload"></i>
+                            Verileri Yükle (Geri Yükle)
+                            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                        </label>
+                        <button class="btn btn-danger" onclick="resetToDefault()">
+                            <i class="fas fa-undo"></i>
+                            Varsayılana Sıfırla
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 2rem;">
+                    <div class="section-header-admin">
+                        <h2><i class="fas fa-info-circle"></i> Sistem Bilgisi</h2>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                        <p><strong>Versiyon:</strong> 1.0.0</p>
+                        <p><strong>Son Güncelleme:</strong> <span id="lastUpdate">-</span></p>
+                        <p><strong>Veri Boyutu:</strong> <span id="dataSize">-</span></p>
+                    </div>
                 </div>
             </section>
         </main>
