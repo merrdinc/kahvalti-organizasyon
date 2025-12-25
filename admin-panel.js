@@ -877,4 +877,133 @@ function updateSystemInfo() {
 // Call updateSystemInfo when page loads
 document.addEventListener('DOMContentLoaded', function() {
     updateSystemInfo();
+    loadMessages();
 });
+
+// ===== MESSAGES SECTION =====
+async function loadMessages() {
+    const container = document.getElementById('messagesContainer');
+    const noMessages = document.getElementById('noMessages');
+    const totalMessages = document.getElementById('totalMessages');
+    const messageBadge = document.getElementById('messageBadge');
+
+    if (!container) return;
+
+    // Show loading
+    container.innerHTML = `
+        <div class="loading-messages">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Mesajlar yükleniyor...</p>
+        </div>
+    `;
+    noMessages.style.display = 'none';
+
+    try {
+        const response = await fetch('api/get-messages.php');
+        const result = await response.json();
+
+        if (result.success) {
+            const messages = result.messages;
+            totalMessages.textContent = result.count;
+
+            // Update badge
+            if (result.count > 0) {
+                messageBadge.textContent = result.count;
+                messageBadge.style.display = 'inline';
+            } else {
+                messageBadge.style.display = 'none';
+            }
+
+            if (messages.length === 0) {
+                container.innerHTML = '';
+                noMessages.style.display = 'block';
+                return;
+            }
+
+            container.innerHTML = messages.map(msg => `
+                <div class="message-card" data-filename="${msg.filename}">
+                    <div class="message-header">
+                        <div class="message-sender">
+                            <span class="name">${escapeHtml(msg.name)}</span>
+                            <span class="email">${escapeHtml(msg.email)}</span>
+                            ${msg.phone ? `<span class="phone"><i class="fas fa-phone"></i> ${escapeHtml(msg.phone)}</span>` : ''}
+                        </div>
+                        <div class="message-date">
+                            <div>${formatDate(msg.date)}</div>
+                            ${msg.email_sent ?
+                                '<span class="email-status sent"><i class="fas fa-check"></i> E-posta gönderildi</span>' :
+                                '<span class="email-status failed"><i class="fas fa-times"></i> E-posta gönderilemedi</span>'
+                            }
+                        </div>
+                    </div>
+                    <div class="message-content">${escapeHtml(msg.message)}</div>
+                    <div class="message-actions">
+                        <button class="btn-reply" onclick="replyToMessage('${escapeHtml(msg.email)}')">
+                            <i class="fas fa-reply"></i> Yanıtla
+                        </button>
+                        <button class="btn-delete" onclick="deleteMessage('${msg.filename}')">
+                            <i class="fas fa-trash"></i> Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            container.innerHTML = `<p class="error">Mesajlar yüklenemedi: ${result.error}</p>`;
+        }
+    } catch (error) {
+        console.error('Mesaj yükleme hatası:', error);
+        container.innerHTML = '';
+        noMessages.style.display = 'block';
+    }
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleString('tr-TR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function replyToMessage(email) {
+    window.location.href = `mailto:${email}`;
+}
+
+async function deleteMessage(filename) {
+    if (!confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch('api/get-messages.php', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ filename })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showAlert('success', 'Mesaj başarıyla silindi!');
+            loadMessages();
+        } else {
+            showAlert('error', 'Mesaj silinemedi: ' + result.error);
+        }
+    } catch (error) {
+        console.error('Mesaj silme hatası:', error);
+        showAlert('error', 'Bir hata oluştu.');
+    }
+}

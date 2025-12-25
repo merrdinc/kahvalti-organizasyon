@@ -56,6 +56,11 @@
                     <i class="fas fa-envelope"></i>
                     <span>İletişim</span>
                 </a>
+                <a href="#messages" class="menu-item" data-section="messages">
+                    <i class="fas fa-inbox"></i>
+                    <span>Mesajlar</span>
+                    <span class="message-badge" id="messageBadge" style="display:none;">0</span>
+                </a>
                 <a href="#footer" class="menu-item" data-section="footer">
                     <i class="fas fa-shoe-prints"></i>
                     <span>Footer</span>
@@ -623,6 +628,48 @@
                             Kaydet
                         </button>
                     </form>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages-section" class="admin-section">
+                <div class="admin-header">
+                    <div>
+                        <h1>Gelen Mesajlar</h1>
+                        <div class="breadcrumb">
+                            <span>Ana Sayfa</span>
+                            <i class="fas fa-chevron-right"></i>
+                            <span>Mesajlar</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadMessages()">
+                        <i class="fas fa-sync-alt"></i>
+                        Yenile
+                    </button>
+                </div>
+                <div class="admin-content">
+                    <div class="messages-stats">
+                        <div class="stat-box">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <span class="stat-number" id="totalMessages">0</span>
+                                <span class="stat-label">Toplam Mesaj</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="messages-container" id="messagesContainer">
+                        <div class="loading-messages">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Mesajlar yükleniyor...</p>
+                        </div>
+                    </div>
+
+                    <div class="no-messages" id="noMessages" style="display:none;">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Henüz mesaj yok</h3>
+                        <p>İletişim formundan gelen mesajlar burada görünecek.</p>
+                    </div>
                 </div>
             </section>
 
