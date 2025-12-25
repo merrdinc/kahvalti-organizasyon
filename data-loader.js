@@ -425,12 +425,21 @@ function loadContactSection(contact, general) {
     if (socialLinks.length >= 4) {
         if (contact.facebook) socialLinks[0].href = contact.facebook;
         if (contact.instagram) socialLinks[1].href = contact.instagram;
+        // Twitter (index 2) - eğer varsa
+        // WhatsApp in social links (index 3)
+        if (contact.whatsapp) {
+            // Numarayı temizle (sadece rakamlar kalsın)
+            const cleanNumber = contact.whatsapp.replace(/\D/g, '');
+            socialLinks[3].href = `https://wa.me/${cleanNumber}`;
+        }
     }
 
-    // Update WhatsApp button
+    // Update WhatsApp floating button
     const whatsappButton = document.querySelector('.whatsapp-float');
     if (whatsappButton && contact.whatsapp) {
-        whatsappButton.href = `https://wa.me/${contact.whatsapp}`;
+        // Numarayı temizle (sadece rakamlar kalsın)
+        const cleanNumber = contact.whatsapp.replace(/\D/g, '');
+        whatsappButton.href = `https://wa.me/${cleanNumber}`;
     }
 }
 
