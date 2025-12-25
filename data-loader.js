@@ -1,12 +1,12 @@
 // ===== DATA LOADER FOR HOMEPAGE =====
-// This script loads data from localStorage and populates the homepage
+// This script loads data from server and populates the homepage
 
-document.addEventListener('DOMContentLoaded', function() {
-    loadSiteData();
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadSiteData();
 });
 
-function loadSiteData() {
-    const data = getSiteData();
+async function loadSiteData() {
+    const data = await getSiteData();
 
     if (data) {
         loadColorSettings(data.general);
@@ -34,11 +34,25 @@ function loadColorSettings(general) {
     if (colors.text) root.style.setProperty('--text-dark', colors.text);
 }
 
-function getSiteData() {
+async function getSiteData() {
+    try {
+        // First try to load from server
+        const response = await fetch('api/load-data.php');
+        const serverData = await response.json();
+
+        if (serverData && serverData.general) {
+            return serverData;
+        }
+    } catch (error) {
+        console.log('Sunucudan veri yüklenemedi, varsayılan veriler kullanılıyor.');
+    }
+
+    // Fallback to localStorage if server fails
     const storedData = localStorage.getItem('siteData');
     if (storedData) {
         return JSON.parse(storedData);
     }
+
     return null;
 }
 

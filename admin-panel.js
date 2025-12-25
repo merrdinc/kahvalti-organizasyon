@@ -5,8 +5,8 @@ if (sessionStorage.getItem('adminLoggedIn') !== 'true' &&
 }
 
 // ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
-    initializeData();
+document.addEventListener('DOMContentLoaded', async function() {
+    await initializeData();
     loadAllData();
     setupNavigationCur();
     updateClock();
@@ -119,19 +119,69 @@ const defaultData = {
 };
 
 // ===== DATA MANAGEMENT =====
-function initializeData() {
-    if (!localStorage.getItem('siteData')) {
-        localStorage.setItem('siteData', JSON.stringify(defaultData));
+let cachedData = null;
+
+async function initializeData() {
+    try {
+        const response = await fetch('api/load-data.php');
+        const serverData = await response.json();
+
+        if (serverData && serverData.general) {
+            cachedData = serverData;
+            localStorage.setItem('siteData', JSON.stringify(serverData));
+        } else {
+            // No data on server, use default and save to server
+            cachedData = defaultData;
+            localStorage.setItem('siteData', JSON.stringify(defaultData));
+            await saveDataToServer(defaultData);
+        }
+    } catch (error) {
+        console.error('Sunucu bağlantı hatası:', error);
+        // Fallback to localStorage
+        if (!localStorage.getItem('siteData')) {
+            localStorage.setItem('siteData', JSON.stringify(defaultData));
+        }
+        cachedData = JSON.parse(localStorage.getItem('siteData'));
     }
 }
 
 function getData() {
+    if (cachedData) return cachedData;
     return JSON.parse(localStorage.getItem('siteData')) || defaultData;
 }
 
-function saveData(data) {
+async function saveDataToServer(data) {
+    try {
+        const response = await fetch('api/save-data.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        return result.success;
+    } catch (error) {
+        console.error('Sunucuya kaydetme hatası:', error);
+        return false;
+    }
+}
+
+async function saveData(data) {
+    // Save to localStorage first (for immediate feedback)
     localStorage.setItem('siteData', JSON.stringify(data));
-    showAlert('success', 'Veriler başarıyla kaydedildi!');
+    cachedData = data;
+
+    // Then save to server
+    const serverSaved = await saveDataToServer(data);
+
+    if (serverSaved) {
+        showAlert('success', 'Veriler başarıyla kaydedildi!');
+    } else {
+        showAlert('warning', 'Veriler kaydedildi ama sunucu hatası oluştu. Lütfen tekrar deneyin.');
+    }
+
     updateStats();
 }
 

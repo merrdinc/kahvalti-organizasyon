@@ -1,0 +1,103 @@
+{
+    "general": {
+        "siteName": "Kahvaltı & Organizasyon",
+        "siteTitle": "Kahvaltı & Organizasyon - Lezzet Dolu Anlar",
+        "siteLogo": "",
+        "labels": {
+            "about": "Hakkımızda",
+            "services": "Hizmetlerimiz",
+            "gallery": "Galeri",
+            "contact": "İletişim"
+        },
+        "titles": {
+            "about": "Lezzet ve Kalitenin Buluşma Noktası",
+            "services": "Size Özel Çözümler",
+            "gallery": "Çalışmalarımızdan Kareler",
+            "contact": "Bizimle İletişime Geçin"
+        },
+        "menu": ["Ana Sayfa", "Hakkımızda", "Hizmetlerimiz", "Galeri", "İletişim"],
+        "colors": {
+            "primary": "#d4694f",
+            "secondary": "#b36c05",
+            "accent": "#2c3e50",
+            "background": "#f8f5f2",
+            "text": "#333333",
+            "gradient": "none"
+        }
+    },
+    "hero": {
+        "title": "Lezzet Dolu Anlarınıza Eşlik Ediyoruz",
+        "subtitle": "Kahvaltı ve organizasyon hizmetlerimizle özel günlerinizi unutulmaz kılıyoruz",
+        "slides": [
+            { "id": 1, "url": "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=1920" },
+            { "id": 2, "url": "https://images.unsplash.com/photo-1555244162-803834f70033?w=1920" },
+            { "id": 3, "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1920" }
+        ],
+        "sliderSpeed": 5,
+        "sliderEffect": "fade",
+        "overlayStyle": "dark",
+        "particles": "none",
+        "button1": "Hizmetlerimiz",
+        "button2": "İletişime Geçin"
+    },
+    "about": {
+        "title": "Sizin İçin Buradayız",
+        "text1": "Yılların deneyimi ve tutkusuyla, kahvaltı ve organizasyon hizmetlerinde kalite standartlarını yeniden tanımlıyoruz. Taze malzemeler, özenli sunum ve kusursuz hizmet anlayışımızla özel günlerinizi unutulmaz kılıyoruz.",
+        "text2": "Doğum günlerinden düğünlere, kurumsal etkinliklerden aile toplantılarına kadar her türlü organizasyonda yanınızdayız.",
+        "image": "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=800",
+        "features": ["Taze ve Kaliteli Malzemeler", "Profesyonel Ekip", "Özel Menü Seçenekleri", "Her Bütçeye Uygun Paketler"]
+    },
+    "services": [
+        {
+            "id": 1,
+            "title": "Serpme Kahvaltı",
+            "description": "Zengin çeşitleri ve taze ürünleriyle doyurucu serpme kahvaltı seçeneklerimiz.",
+            "image": "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=600",
+            "icon": "fas fa-utensils",
+            "features": ["Çeşit çeşit peynirler", "Ev yapımı reçeller", "Sıcak börekler", "Taze meyve sunumları"]
+        },
+        {
+            "id": 2,
+            "title": "Doğum Günü & Parti",
+            "description": "Doğum günü ve özel günleriniz için tam paket organizasyon hizmetleri.",
+            "image": "https://images.unsplash.com/photo-1555244162-803834f70033?w=600",
+            "icon": "fas fa-birthday-cake",
+            "features": ["Özel dekorasyon", "Pasta ve ikramlar", "Animasyon hizmetleri", "Fotoğraf çekimi"]
+        },
+        {
+            "id": 3,
+            "title": "Kurumsal Organizasyon",
+            "description": "Şirket etkinlikleri ve toplantılarınız için profesyonel çözümler.",
+            "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600",
+            "icon": "fas fa-briefcase",
+            "features": ["Toplantı kahvaltıları", "Kokteyl organizasyonu", "Kurumsal etkinlikler", "Özel menü planlaması"]
+        },
+        {
+            "id": 4,
+            "title": "Düğün & Nişan",
+            "description": "Hayatınızın en özel gününde yanınızdayız, her detayı kusursuz planlıyoruz.",
+            "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600",
+            "icon": "fas fa-ring",
+            "features": ["Nişan organizasyonu", "Düğün yemek servisi", "Kokteyl ikramları", "Gelin çıkma kahvaltısı"]
+        }
+    ],
+    "gallery": [
+        { "id": 1, "url": "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=800", "alt": "Kahvaltı 1" },
+        { "id": 2, "url": "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=800", "alt": "Kahvaltı 2" },
+        { "id": 3, "url": "https://images.unsplash.com/photo-1555244162-803834f70033?w=800", "alt": "Parti" },
+        { "id": 4, "url": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800", "alt": "Kurumsal" },
+        { "id": 5, "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800", "alt": "Düğün" }
+    ],
+    "contact": {
+        "address": "Örnek Mahallesi, Lezzet Sokak No:123\nİstanbul, Türkiye",
+        "phone": "0 555 123 45 67",
+        "email": "info@kahvaltiorganizasyon.com",
+        "whatsapp": "905321777786",
+        "facebook": "#",
+        "instagram": "#"
+    },
+    "footer": {
+        "copyright": "© 2024 Kahvaltı & Organizasyon. Tüm hakları saklıdır.",
+        "text": "Lezzet dolu anlarınıza eşlik etmekten mutluluk duyarız."
+    }
+}
