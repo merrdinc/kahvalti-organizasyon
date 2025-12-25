@@ -109,8 +109,9 @@ const defaultData = {
         phone: "0 555 123 45 67",
         email: "info@kahvaltiorganizasyon.com",
         whatsapp: "905321777786",
-        facebook: "#",
-        instagram: "#"
+        facebook: "",
+        instagram: "",
+        twitter: ""
     },
     footer: {
         copyright: "© 2024 Kahvaltı & Organizasyon. Tüm hakları saklıdır.",
@@ -285,8 +286,9 @@ function loadAllData() {
     document.getElementById('contactPhone').value = data.contact.phone;
     document.getElementById('contactEmail').value = data.contact.email;
     document.getElementById('contactWhatsapp').value = data.contact.whatsapp;
-    document.getElementById('contactFacebook').value = data.contact.facebook;
-    document.getElementById('contactInstagram').value = data.contact.instagram;
+    document.getElementById('contactFacebook').value = data.contact.facebook || '';
+    document.getElementById('contactInstagram').value = data.contact.instagram || '';
+    document.getElementById('contactTwitter').value = data.contact.twitter || '';
 
     // Load Footer
     document.getElementById('footerCopyright').value = data.footer?.copyright || '';
@@ -609,7 +611,8 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e) {
         email: document.getElementById('contactEmail').value,
         whatsapp: document.getElementById('contactWhatsapp').value,
         facebook: document.getElementById('contactFacebook').value,
-        instagram: document.getElementById('contactInstagram').value
+        instagram: document.getElementById('contactInstagram').value,
+        twitter: document.getElementById('contactTwitter').value
     };
 
     saveData(data);

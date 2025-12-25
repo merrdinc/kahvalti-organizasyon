@@ -437,14 +437,32 @@ function loadContactSection(contact, general) {
     // Update social links
     const socialLinks = document.querySelectorAll('.social-links a');
     if (socialLinks.length >= 4) {
-        if (contact.facebook) socialLinks[0].href = contact.facebook;
-        if (contact.instagram) socialLinks[1].href = contact.instagram;
-        // Twitter (index 2) - eğer varsa
+        // Helper function to check if link is valid
+        const isValidLink = (link) => link && link !== '#' && link.trim() !== '';
+
+        // Facebook (index 0)
+        if (isValidLink(contact.facebook)) {
+            socialLinks[0].href = contact.facebook;
+            socialLinks[0].target = '_blank';
+        }
+
+        // Instagram (index 1)
+        if (isValidLink(contact.instagram)) {
+            socialLinks[1].href = contact.instagram;
+            socialLinks[1].target = '_blank';
+        }
+
+        // Twitter (index 2)
+        if (isValidLink(contact.twitter)) {
+            socialLinks[2].href = contact.twitter;
+            socialLinks[2].target = '_blank';
+        }
+
         // WhatsApp in social links (index 3)
         if (contact.whatsapp) {
-            // Numarayı temizle (sadece rakamlar kalsın)
             const cleanNumber = contact.whatsapp.replace(/\D/g, '');
             socialLinks[3].href = `https://wa.me/${cleanNumber}`;
+            socialLinks[3].target = '_blank';
         }
     }
 

@@ -93,8 +93,9 @@
         "phone": "0 555 123 45 67",
         "email": "info@kahvaltiorganizasyon.com",
         "whatsapp": "905321777786",
-        "facebook": "#",
-        "instagram": "#"
+        "facebook": "",
+        "instagram": "",
+        "twitter": ""
     },
     "footer": {
         "copyright": "© 2024 Kahvaltı & Organizasyon. Tüm hakları saklıdır.",
