@@ -138,26 +138,64 @@ window.initializeGallerySlider();
 // ===== CONTACT FORM =====
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    // Get form values
-    const formData = new FormData(contactForm);
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
 
-    // Show success message (you can customize this)
-    alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+        submitBtn.disabled = true;
 
-    // Reset form
-    contactForm.reset();
+        // Get form values
+        const formData = new FormData(contactForm);
 
-    // In a real application, you would send this data to a server
-    // Example:
-    // fetch('/api/contact', {
-    //     method: 'POST',
-    //     body: formData
-    // }).then(response => response.json())
-    //   .then(data => console.log(data));
-});
+        try {
+            const response = await fetch('api/submit-contact.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Show success message
+                showFormMessage('success', 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                contactForm.reset();
+            } else {
+                showFormMessage('error', result.error || 'Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        } catch (error) {
+            console.error('Form gönderme hatası:', error);
+            showFormMessage('error', 'Bağlantı hatası. Lütfen tekrar deneyin.');
+        }
+
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+}
+
+// Show form message helper
+function showFormMessage(type, message) {
+    // Remove existing message
+    const existingMsg = document.querySelector('.form-message');
+    if (existingMsg) existingMsg.remove();
+
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `form-message form-message-${type}`;
+    msgDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        <span>${message}</span>
+    `;
+
+    contactForm.insertBefore(msgDiv, contactForm.firstChild);
+
+    // Auto-remove after 5 seconds
+    setTimeout(() => msgDiv.remove(), 5000);
+}
 
 // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
