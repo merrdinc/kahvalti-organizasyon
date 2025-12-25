@@ -108,7 +108,7 @@ const defaultData = {
         address: "Örnek Mahallesi, Lezzet Sokak No:123\nİstanbul, Türkiye",
         phone: "0 555 123 45 67",
         email: "info@kahvaltiorganizasyon.com",
-        whatsapp: "908503084870",
+        whatsapp: "905395190919",
         facebook: "#",
         instagram: "#"
     },
